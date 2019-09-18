@@ -6,7 +6,7 @@ Once your customer is ready to pay, FasterPay will take care of the payment, not
 ## Downloading the FasterPay Python SDK
 
 ```sh
-$ git clone https://github.com/FasterPay/fasterpay-python.git
+$ git clone https://github.com/FasterPay/fasterpay-python3.git
 ```
 
 ## Installing the FasterPay Python SDK.
