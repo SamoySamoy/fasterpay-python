@@ -4,9 +4,9 @@ class Config:
         self.publicKey = publicKey
         self.privateKey = privateKey
         if is_test is True :
-            self.API_BASE_URL = "http://pay.fasterpay.com"
+            self.API_BASE_URL = "https://pay.fasterpay.com"
         else:
-            self.API_BASE_URL = "http://pay.sandbox.fasterpay.com"
+            self.API_BASE_URL = "https://pay.sandbox.fasterpay.com"
 
         if apiVersion is not None :
             self.VERSION = apiVersion
