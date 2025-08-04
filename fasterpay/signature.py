@@ -1,5 +1,5 @@
+from urllib.parse import urlencode
 
-import urllib
 import hashlib, hmac
 
 
@@ -11,16 +11,27 @@ class Signature:
     def ksort(self, params):
         return [(k, params[k]) for k in sorted(params.keys())]
 
-    def calculate_hash(self, params, scheme = "v1"):
-        if scheme is "v1":
-            urlencoded_params = urllib.parse.urlencode(self.ksort(params)) + self.gateway.config.get_private_key()
+    def calculate_hash(self, params, scheme="v1"):
+        if scheme == "v1":
+            urlencoded_params = (
+                urlencode(self.ksort(params))
+                + self.gateway.config.get_private_key()
+            )
             return hashlib.sha256(urlencoded_params.encode()).hexdigest()
         else:
-            encoded_string = ''
+            encoded_string = ""
             for k, v in self.ksort(params):
-                encoded_string += k+"="+v+";"
-            return hmac.new(self.gateway.config.get_private_key().encode(), encoded_string.encode(), digestmod=hashlib.sha256).hexdigest()
+                encoded_string += k + "=" + v + ";"
+            return hmac.new(
+                self.gateway.config.get_private_key().encode(),
+                encoded_string.encode(),
+                digestmod=hashlib.sha256,
+            ).hexdigest()
 
     def calculate_pingback_hash(self, pingbackdata, is_string=True):
         if is_string is True:
-            return hmac.new(self.gateway.config.get_private_key().encode(), pingbackdata.encode(), digestmod=hashlib.sha256).hexdigest()
+            return hmac.new(
+                self.gateway.config.get_private_key().encode(),
+                pingbackdata.encode(),
+                digestmod=hashlib.sha256,
+            ).hexdigest()

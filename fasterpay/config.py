@@ -3,8 +3,8 @@ class Config:
     def __init__(self, privateKey, publicKey, is_test = False, apiVersion = None):
         self.publicKey = publicKey
         self.privateKey = privateKey
-        if is_test is True :
-            self.API_BASE_URL = "https://pay.fasterpay.com"
+        if is_test is False:
+            self.API_BASE_URL = "https://pay.fasterpay.com" 
         else:
             self.API_BASE_URL = "https://pay.sandbox.fasterpay.com"
 

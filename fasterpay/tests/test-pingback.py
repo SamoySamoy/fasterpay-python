@@ -1,4 +1,3 @@
-from urllib.parse import urlparse
 from fasterpay.gateway import Gateway
 
 gateway = Gateway("<your private key>", "<your public key>", True)
