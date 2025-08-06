@@ -7,6 +7,7 @@ from fasterpay.transaction import Transaction
 from fasterpay.address import Address
 from fasterpay.contact import Contact
 from fasterpay.payout import Payout
+from fasterpay.einvoice import EInvoice
 class Gateway:
     def __init__(
         self,
@@ -45,4 +46,10 @@ class Gateway:
     
     def contact(self) -> Contact:
         return Contact(self)
+    
+    def payout(self) -> Payout:
+        return Payout(self)
+    
+    def einvoice(self) -> EInvoice:
+        return EInvoice(self)
     
