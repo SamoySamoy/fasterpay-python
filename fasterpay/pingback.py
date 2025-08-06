@@ -16,3 +16,4 @@ class Pingback:
         # Fallback to v1: compare API keys (legacy)
         api_key = headers.get("X-ApiKey")
         return api_key == self.gateway.config.private_key
+    

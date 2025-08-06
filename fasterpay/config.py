@@ -14,6 +14,7 @@ class Config:
             "https://pay.fasterpay.com"
         )
         self._api_version = api_version
+        self._external_api_url = "https://business.fasterpay.com"
 
     @property
     def public_key(self) -> str:
@@ -30,3 +31,7 @@ class Config:
     @property
     def api_version(self) -> str:
         return self._api_version
+    
+    @property
+    def external_api_url(self) -> str:
+        return self._external_api_url

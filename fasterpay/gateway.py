@@ -4,6 +4,7 @@ from fasterpay.pingback import Pingback
 from fasterpay.paymentform import PaymentForm
 from fasterpay.subscription import Subscription
 from fasterpay.transaction import Transaction
+from fasterpay.address import Address
 
 class Gateway:
     def __init__(
@@ -37,3 +38,7 @@ class Gateway:
 
     def transaction(self) -> Transaction:
         return Transaction(self)
+    
+    def address(self) -> Address:
+        return Address(self)
+    
