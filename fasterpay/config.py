@@ -1,26 +1,32 @@
 class Config:
+    def __init__(
+        self,
+        private_key: str,
+        public_key: str,
+        is_test: bool = False,
+        api_version: str = "1.0.0",
+    ):
+        self._private_key = private_key
+        self._public_key = public_key
+        self._api_base_url = (
+            "https://pay.sandbox.fasterpay.com"
+            if is_test else
+            "https://pay.fasterpay.com"
+        )
+        self._api_version = api_version
 
-    def __init__(self, privateKey, publicKey, is_test = False, apiVersion = None):
-        self.publicKey = publicKey
-        self.privateKey = privateKey
-        if is_test is False:
-            self.API_BASE_URL = "https://pay.fasterpay.com" 
-        else:
-            self.API_BASE_URL = "https://pay.sandbox.fasterpay.com"
+    @property
+    def public_key(self) -> str:
+        return self._public_key
 
-        if apiVersion is not None :
-            self.VERSION = apiVersion
-        else:
-            self.VERSION = "1.0.0"
+    @property
+    def private_key(self) -> str:
+        return self._private_key
 
-    def get_public_key(self):
-        return self.publicKey
+    @property
+    def api_url(self) -> str:
+        return self._api_base_url
 
-    def get_private_key(self):
-        return self.privateKey
-
-    def get_api_url(self):
-        return self.API_BASE_URL
-
-    def get_api_version(self):
-        return self.VERSION
+    @property
+    def api_version(self) -> str:
+        return self._api_version

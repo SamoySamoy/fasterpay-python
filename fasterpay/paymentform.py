@@ -1,26 +1,31 @@
-class PaymentForm:
+import html
 
+class PaymentForm:
     def __init__(self, gateway):
         self.gateway = gateway
 
-    def build_form(self, parameters):
-        payload = parameters.get("payload")
-        payload.update({"api_key": self.gateway.config.get_public_key()})
+    def build_form(self, parameters: dict) -> str:
+        payload = parameters.get("payload", {})
+        payload["api_key"] = self.gateway.config.public_key
 
-        if "sign_version" in payload:
-            hash = self.gateway.signature().calculate_hash(payload, payload.get("sign_version"))
-        else:
-            hash = self.gateway.signature().calculate_hash(payload)
+        sign_version = payload.get("sign_version", "v1")    
+        payload["hash"] = self.gateway.signature().calculate_hash(payload, sign_version)
 
-        payload.update({"hash": hash})
+        form_fields = "\n".join(
+            f'<input type="hidden" name="{html.escape(str(k))}" value="{html.escape(str(v))}" />'
+            for k, v in payload.items()
+        )
 
-        form = '<form align="center" method="post" action="' + self.gateway.config.get_api_url() + '/payment/form">'
-        for param in payload:
-            form  += '<input type="hidden" name="' + param + '" value="' + str(payload[param]) + '" />'
+        form = f'''
+            <form align="center" method="post" action="{self.gateway.config.api_url}/payment/form">
+            {form_fields}
+            <input type="Submit" value="Pay Now" id="fasterpay-submit"/>
+            </form>
+            '''.strip()
 
-        form += '<input type="Submit" value="Pay Now" id="fasterpay-submit"/></form>'
-
-        if "auto_submit_form" in parameters:
-            form += "<script type=\"text/javascript\">document.getElementById(\"fasterpay-submit\").click(); </script>"
+        if parameters.get("auto_submit_form"):
+            form += '\n<script type="text/javascript">document.getElementById("fasterpay-submit").click();</script>'
 
         return form
+    
+    

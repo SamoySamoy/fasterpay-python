@@ -1,5 +1,9 @@
-FasterPay Python SDK enables you to integrate the FasterPay's Checkout Page seamlessly without having the hassle of integrating everything from Scratch.
+FasterPay Python SDK
+=====================
 
-Once your customer is ready to pay, FasterPay will take care of the payment, notify your system about the payment and return the customer back to your Thank You page.
+Integrate FasterPay's Checkout Page into your application with ease.
 
-For more information on the API Parameters, refer to our entire API Documentation [here](https://docs.fasterpay.com/api#section-custom-integration)
+Once your customer is ready to pay, FasterPay will handle the payment, notify your system, and redirect the customer back to your thank-you page.
+
+For full API documentation, visit:
+https://docs.fasterpay.com/api#section-custom-integration

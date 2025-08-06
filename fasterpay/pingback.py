@@ -1,21 +1,18 @@
 class Pingback:
-
     def __init__(self, gateway):
         self.gateway = gateway
 
-    def validate(self, pingbackdata, headers):
-        if len(headers) == 0:
+    def validate(self, pingbackdata: str, headers: dict) -> bool:
+        if not headers or not pingbackdata:
             return False
 
-        if len(pingbackdata) == 0:
-            return False
+        signature_version = headers.get("X-Fasterpay-Signature-Version", "v1")
 
-        if headers.get("X-Fasterpay-Signature-Version") == "v2":
-            generated_hash = self.gateway.signature().calculate_pingback_hash(pingbackdata)
-            if generated_hash == headers.get("X-Fasterpay-Signature"):
-                return True
-        else:
-            if headers.get("X-ApiKey") == self.gateway.config.get_private_key():
-                return True
+        if signature_version == "v2":
+            expected_signature = self.gateway.signature().calculate_pingback_hash(pingbackdata)
+            received_signature = headers.get("X-Fasterpay-Signature")
+            return expected_signature == received_signature
 
-        return False
+        # Fallback to v1: compare API keys (legacy)
+        api_key = headers.get("X-ApiKey")
+        return api_key == self.gateway.config.private_key
