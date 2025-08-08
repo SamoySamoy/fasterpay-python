@@ -7,12 +7,12 @@ from fasterpay.transaction import Transaction
 from fasterpay.address import Address
 from fasterpay.contact import Contact
 from fasterpay.payout import Payout
-from fasterpay.einvoice import EInvoice
+from fasterpay.einvoice import Einvoice
 class Gateway:
     def __init__(
         self,
-        private_key: str,
         public_key: str,
+        private_key: str,
         is_test: bool = False,
         api_version: str = "1.0.0",
     ):
@@ -50,6 +50,6 @@ class Gateway:
     def payout(self) -> Payout:
         return Payout(self)
     
-    def einvoice(self) -> EInvoice:
-        return EInvoice(self)
+    def einvoice(self) -> Einvoice:
+        return Einvoice(self)
     
